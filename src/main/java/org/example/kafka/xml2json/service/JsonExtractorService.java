@@ -18,7 +18,8 @@ public class JsonExtractorService {
             if (hashMap.containsKey(nomeCampoXml)) {
                 Object xml = hashMap.get(nomeCampoXml);
                 if (xml != null) {
-                    hashMap.put(nomeCampoXml, this.extractXmlAsJson(xml.toString()));
+//                    hashMap.put(nomeCampoXml, this.extractXmlAsJson(xml.toString()));
+                    hashMap.put(nomeCampoXml, this.extractXmlAsMap(xml.toString()));
                 }
             }
             return objectMapper.writeValueAsString(hashMap);
@@ -34,6 +35,16 @@ public class JsonExtractorService {
         final ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(map);
     }
+
+    public Map<String, Object> extractXmlAsMap(final String xml) throws JsonProcessingException {
+        final XmlMapper xmlMapper = new XmlMapper();
+        final Map<String, Object> map = xmlMapper.readValue(xml, HashMap.class);
+        return map;
+
+//        final ObjectMapper objectMapper = new ObjectMapper();
+//        return objectMapper.writeValueAsString(map);
+    }
+
 
     public static void main(String[] args) throws JsonProcessingException {
         JsonExtractorService jsonExtractorService = new JsonExtractorService();
